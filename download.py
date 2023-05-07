@@ -25,12 +25,9 @@ def start_resume():
 i=0 # index for location tracking of condition
 
 while True: # Run loop until everything is right
+print(i)
 	i+=1 # increase everytime
-	if i != 3: 
 		try:
 			start_download() # do it
 		except:
 			start_resume() # if error resume from here
-	if i ==3:
-		print('3 times failed')
-		break # after 3 try end program
