@@ -22,12 +22,14 @@ def start_resume():
 	file_name_input2 = input('Enter the file name in local storage: ')
 	download_new_file(file_url_input2, file_name_input2)
 
-i=0 # index for location tracking of condition
-
-while True: # Run loop until everything is right
-print(i)
+i=1 # index for location tracking of condition
+b=0
+while b==1: # Run loop until everything is right
+        print('This is try no. '+str(i))
 	i+=1 # increase everytime
 		try:
 			start_download() # do it
 		except:
 			start_resume() # if error resume from here
+                else:
+                        b=1
