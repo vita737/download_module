@@ -23,10 +23,10 @@ def start_resume():
 	download_new_file(file_url_input2, file_name_input2)
 
 i=1 # index for location tracking of condition
-b=0
-while b==1: # Run loop until everything is right
-        print('This is try no. '+str(i))
+b=0 #index 0,1 which tells if want to run loop
+while b!=1: # Run loop until everything is right
 	i+=1 # increase everytime
+        print('This is try no. '+str(i))	
 		try:
 			start_download() # do it
 		except:
