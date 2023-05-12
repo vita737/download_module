@@ -26,10 +26,10 @@ i=1 # index for location tracking of condition
 b=0 #index 0,1 which tells if want to run loop
 while b!=1: # Run loop until everything is right
 	i+=1 # increase everytime
-        print('This is try no. '+str(i))	
+	print('This is try no. '+str(i))	
 		try:
 			start_download() # do it
 		except:
 			start_resume() # if error resume from here
-                else:
-                        b=1
+		else:
+			b=1
