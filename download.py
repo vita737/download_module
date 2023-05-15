@@ -11,10 +11,12 @@ def download_new_file(file_url, file_name):
 		print("Network error, you may not have internet")
 	except requests.exceptions.ConnectionAbortedError:
 		print('Network suddenly stoped working')
+		resume_download(file_url_input, file_name_input)
 	else:
 		print("successfully downloaded !")
 
 def start_download():
+	global file_url_input, file_name_input
 	file_url_input = input('Enter the file www url: ')
 	file_name_input = input('Enter the file name in local storage: ')
 	download_new_file(file_url_input, file_name_input)
