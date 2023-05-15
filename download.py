@@ -1,12 +1,18 @@
 import requests # HTTP library to send HTTP request
 import os # Module to use operating system dependent functionality
 
-print('Akshat Command Line Tool/nUse this tool to download files')
+print('Akshat Command Line Tool\nUse this tool to download files')
 
 def download_new_file(file_url, file_name):
 	print('Downloading a new file')
-	open(file_name,'wb').write(requests.get(file_url, stream = True).content) # create the file, write to it binary from the url, stream=true meanswrite directly
-	print('Downloaded the file')
+	try:
+		open(file_name,'wb').write(requests.get(file_url, stream = True).content) # create the file, write to it binary from the url, stream=true meanswrite directly
+	except requests.exceptions.ConnectionError: # if net error from start
+		print("Network error, you may not have internet")
+	except requests.exceptions.ConnectionAbortedError:
+		print('Network suddenly stoped working')
+	else:
+		print("successfully downloaded !")
 
 def start_download():
 	file_url_input = input('Enter the file www url: ')
@@ -22,14 +28,5 @@ def start_resume():
 	file_name_input2 = input('Enter the file name in local storage: ')
 	download_new_file(file_url_input2, file_name_input2)
 
-i=1 # index for location tracking of condition
-b=0 #index 0,1 which tells if want to run loop
-while b!=1: # Run loop until everything is right
-	i+=1 # increase everytime
-	print('This is try no. '+str(i))	
-		try:
-			start_download() # do it
-		except:
-			start_resume() # if error resume from here
-		else:
-			b=1
+
+start_download() # do it
