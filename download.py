@@ -9,9 +9,8 @@ def download_new_file(file_url, file_name):
 		open(file_name,'wb').write(requests.get(file_url, stream = True).content) # create the file, write to it binary from the url, stream=true meanswrite directly
 	except requests.exceptions.ConnectionError: # if net error from start
 		print("Network error, you may not have internet")
-	except requests.exceptions.ChunkedEncodingError:
+	except requests.exceptions.ChunkedEncodingError: # if net not working at middle
 		print('Network suddenly stoped working')
-		resume_download(file_url_input, file_name_input)
 	else:
 		print("successfully downloaded !")
 
@@ -30,5 +29,8 @@ def start_resume():
 	file_name_input2 = input('Enter the file name in local storage: ')
 	download_new_file(file_url_input2, file_name_input2)
 
-
-start_download() # do it
+in1=input("Enter 1 or 2 for download or resume")
+if in1 == 1:
+	start_download() # do it
+if in1==2:
+	start_resume()
