@@ -22,7 +22,7 @@ def start_download():
 	download_new_file(file_url_input, file_name_input)
 
 def resume_download(file_url, file_name):
-	file_byte = os.path.getsize(file_url) # Get the size of file downloading to get continuation location
+	file_byte = os.path.getsize(file_name) # Get the size of file downloading to get continuation location
 	resume_download_header = {'Range':'bytes='+file_byte+'-'} # The Range HTTP request header indicates the part of a document that the server should return Range: <unit>=<range-start>-
 	open(file_name,'ab').write(requests.get(file_url,headers=resume_download_header, stream = True).content) # headers specify additional data for requests
 def start_resume():
