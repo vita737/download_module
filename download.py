@@ -9,7 +9,7 @@ def download_new_file(file_url, file_name):
 		open(file_name,'wb').write(requests.get(file_url, stream = True).content) # create the file, write to it binary from the url, stream=true meanswrite directly
 	except requests.exceptions.ConnectionError: # if net error from start
 		print("Network error, you may not have internet")
-	except requests.exceptions.ConnectionAbortedError:
+	except requests.exceptions.ChunkedEncodingError:
 		print('Network suddenly stoped working')
 		resume_download(file_url_input, file_name_input)
 	else:
