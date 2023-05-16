@@ -6,7 +6,9 @@ print('Akshat Command Line Tool\nUse this tool to download files')
 def download_new_file(file_url, file_name):
 	print('Downloading a new file')
 	try:
-		open(file_name,'wb').write(requests.get(file_url, stream = True).content) # create the file, write to it binary from the url, stream=true meanswrite directly
+		response = requests.get(file_url,stream = True)
+		for x in response.iter_content(1024):
+			open(file_name,'wb').write(x) # create the file, write to it binary from the url, stream=true meanswrite directly
 	except requests.exceptions.ConnectionError: # if net error from start
 		print("Network error, you may not have internet")
 	except requests.exceptions.ChunkedEncodingError: # if net not working at middle
