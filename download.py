@@ -1,23 +1,29 @@
 import requests # HTTP library to send HTTP request
 import os # Module to use operating system dependent functionality
-import time
+import time, sys
 print('Akshat Command Line Tool\nUse this tool to download files')
 
 def download_new_file(file_url, file_name):
+	s=time.time()
 	print('Downloading a new file')
-
+	total=0
 	open_file_to_write_bin=open(file_name,'wb')
 	try:
 		response = requests.get(file_url, stream=True) # get headers and prepare file to download we accessed
 	except requests.exceptions.ConnectionError: # if net error from start
 		print("Network error, you may not have internet")
-	except requests.exceptions.ChunkedEncodingError: # if net not working at middle
-		print('Network suddenly stoped working')
+	# ')
 	else:
+		content_len = response.headers['Content-Length']
 		for x in response.iter_content(chunk_size=1024): # loop after 1024 bytes
-			open_file_to_write_bin.write(x) # create the file, write to it binary from the url, stream=true meanswrite directly
-			
-		print("successfully downloaded !")
+			total+=1024			
+			open_file_to_write_bin.write(x) # create the file, write to it binary from the url, stream=true meanswrite directly	
+			if total%1024==0:				
+				print(str(round(100*total/int(content_len))))
+				sys.stdout.write("\033[F")
+		print("\nsuccessfully downloaded !")
+	e=time.time()
+	print(e-s)
 
 
 def start_download():
@@ -33,7 +39,7 @@ def resume_download(file_url, file_name):
 def start_resume():
 	file_url_input2 = input('Enter the file www url: ')
 	file_name_input2 = input('Enter the file name in local storage: ')
-	download_new_file(file_url_input2, file_name_input2)
+	resume_download(file_url_input2, file_name_input2)
 
 in1=int(input("Enter 1 or 2 for download or resume: "))
 if in1 == 1:
