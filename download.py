@@ -10,15 +10,17 @@ def download_new_file(file_url, file_name):
 	total=0
 	open_file_to_write_bin=open(file_name,'wb') # open file to write binary
 	try:
-		response = requests.get(file_url, stream=True) # get headers and prepare file to download we accessed
+		response = requests.get(file_url, stream=True) # get headers and prepare file to download we accessed, stream=True prevent downloading file at once instead download when accessed
 	except requests.exceptions.ConnectionError: # if net error from start
 		print("Network error, you may not have internet")
 	else: # if no error
+		i=0
 		content_len = response.headers['Content-Length'] # get total file lenght
-		for x in response.iter_content(chunk_size=1024): # loop after 1024 bytes which will be loaded in memory at a time
+		for x in response.iter_content(chunk_size=1024): #  iterate over each bit in response.content, chunk_size tells how much to put in memory at once 
+			i+=1
 			total+=1024	# increase downloaded file by 1024 as it iterates
 			open_file_to_write_bin.write(x) # create the file, write to it binary from the url, stream=true meanswrite directly	
-			if total%1024==0: # if one time next 1024 byte is downloaded
+			if i%1/100*int(content_len) == 0: # if one time next 1024 byte is downloaded
 				print(str(round(100*total/int(content_len)))) # calculate download percent
 				sys.stdout.write("\033[F") # erase latest line
 		print("\nsuccessfully downloaded !")
